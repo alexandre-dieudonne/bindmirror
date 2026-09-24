@@ -1,0 +1,7 @@
+<button type="button"
+        class="h-9 px-2.5 text-xs font-medium rounded-md border cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+        [class]="toggleClass()"
+        [disabled]="disabled()"
+        (click)="toggle()">
+    <ng-content/>
+</button>

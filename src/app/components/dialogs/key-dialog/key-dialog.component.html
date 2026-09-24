@@ -1,0 +1,12 @@
+<div class="flex flex-col items-center gap-3 min-w-50 p-8 bg-surface rounded-2xl shadow-lg">
+    <div class="text-sm text-text/60">Position {{ data.position }}</div>
+    <div
+        class="flex items-center justify-center min-w-13 min-h-13 px-3 font-medium text-3xl uppercase text-text bg-bg border border-divider rounded-lg"
+        tabindex="0" #labelEl (keydown)="onKeyPress($event)">{{ data.label || '—' }}
+    </div>
+    <div class="text-xs text-text/50">Press any key to set it.</div>
+    <div class="mt-1 flex items-center gap-2">
+        <app-custom-button type="button" variant="ghostDanger" (click)="onUnbind()">Unbind</app-custom-button>
+        <app-custom-button type="button" (click)="dialogRef.close()">Close</app-custom-button>
+    </div>
+</div>

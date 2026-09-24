@@ -1,0 +1,33 @@
+{
+    "kind": "keymaps",
+    "data": {
+        "testKeymap": {
+            "forward": {"strokes": [{"key": "w"}], "locked": false},
+            "backward": {"strokes": [{"key": "s"}], "locked": false},
+            "left": {"strokes": [{"key": "a"}], "locked": false},
+            "right": {"strokes": [{"key": "d"}], "locked": false},
+            "spell 1": {"strokes": [{"key": "q"}], "locked": false},
+            "spell 2": {"strokes": [{"key": "e"}], "locked": false},
+            "reload": {"strokes": [{"key": "r"}], "locked": false}
+        },
+        "CustomKeymap": {
+            "f": {"strokes": [{"key": "f"}], "locked": false},
+            "s": {"strokes": [{"key": "s"}], "locked": false}
+        },
+        "ModifierKeymap": {
+            "save": {"strokes": [{"key": "s", "modifiers": {"ctrl": true}}], "locked": false},
+            "save as": {"strokes": [{"key": "s", "modifiers": {"ctrl": true, "shift": true}}], "locked": false},
+            "quit": {"strokes": [{"key": "q", "modifiers": {"alt": true, "meta": true}}], "locked": false}
+        },
+        "ChordKeymap": {
+            "comment line": {"strokes": [{"key": "k", "modifiers": {"ctrl": true}}, {"key": "c", "modifiers": {"ctrl": true}}], "locked": false},
+            "uncomment line": {"strokes": [{"key": "k", "modifiers": {"ctrl": true}}, {"key": "u", "modifiers": {"ctrl": true}}], "locked": false}
+        },
+        "MouseKeymap": {
+            "interact": {"strokes": [{"key": "Left Mouse Button"}], "locked": false},
+            "context menu": {"strokes": [{"key": "Right Mouse Button"}], "locked": false},
+            "zoom in": {"strokes": [{"key": "Mouse Scroll Up"}], "locked": false},
+            "zoom out": {"strokes": [{"key": "Mouse Scroll Down"}], "locked": false}
+        }
+    }
+}

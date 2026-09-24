@@ -1,0 +1,53 @@
+<div class="box-content max-w-6xl mx-auto px-4 sm:px-8 lg:px-12 pt-7 pb-18">
+    <div class="flex items-end justify-between gap-4 flex-wrap mb-8">
+        <div class="flex flex-col gap-1">
+            <h1 class="m-0 text-4xl font-medium tracking-tight">{{ title() }}</h1>
+            <span class="text-sm text-text/60">{{ subtitle() }}</span>
+        </div>
+        <div class="flex items-center gap-2">
+            <app-new-button [link]="newLink()">New</app-new-button>
+            <app-import-button
+                [localStorageKey]="localStorageKey()"
+                isAllImport="true"
+                [localStorageValues]="items()"
+                (imported)="itemsChange.emit($event)">
+                Import
+            </app-import-button>
+            <app-export-button
+                [localStorageKey]="localStorageKey()"
+                isAllExport="true"
+                [localStorageValues]="items()">
+                Export All
+            </app-export-button>
+        </div>
+    </div>
+
+    <div class="flex flex-col p-1.5 rounded-2xl bg-surface shadow-sm divide-y divide-divider">
+        @for (row of rows(); track row[0]) {
+            <div class="group flex items-center justify-between gap-4 px-3 py-2.5 rounded-lg hover:bg-text/5">
+                <span class="flex items-baseline gap-2.5 min-w-0">
+                    <span class="text-sm truncate">{{ row[0] }}</span>
+                    <span class="text-xs text-text/40 whitespace-nowrap">{{ itemMeta()(row[1]) }}</span>
+                </span>
+                <span class="flex items-center gap-0.5 shrink-0 opacity-55 group-hover:opacity-100 transition-opacity">
+                    <app-edit-button [link]="row[0]">Edit</app-edit-button>
+                    <app-export-button
+                        variant="ghost"
+                        [localStorageKey]="localStorageKey()"
+                        [localStorageValues]="single(row[0], row[1])"
+                        [name]="row[0]">
+                        Export
+                    </app-export-button>
+                    <app-delete-button
+                        [localStorageKey]="localStorageKey()"
+                        [localStorageValues]="items()"
+                        [name]="row[0]"
+                        (deleted)="itemsChange.emit($event)">Delete
+                    </app-delete-button>
+                </span>
+            </div>
+        } @empty {
+            <div class="px-3 py-6 text-sm text-text/50 text-center">Nothing here yet.</div>
+        }
+    </div>
+</div>

@@ -1,0 +1,8 @@
+<input
+    class="w-full min-h-9 py-1.5 px-2.5 text-sm text-text caret-accent bg-surface border border-divider rounded-md hover:border-text/45"
+    [type]="type()"
+    [placeholder]="placeholder()"
+    [value]="value()"
+    (input)="value.set($any($event.target).value)"
+    [disabled]="disabled()"
+/>

@@ -1,0 +1,9 @@
+<app-crud-list
+    [title]="config.title"
+    [itemLabel]="config.itemLabel"
+    [newLink]="config.newLink"
+    [localStorageKey]="config.localStorageKey"
+    [items]="items()"
+    [itemMeta]="config.itemMeta"
+    (itemsChange)="items.set($event)">
+</app-crud-list>

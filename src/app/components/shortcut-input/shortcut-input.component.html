@@ -1,0 +1,34 @@
+<ng-template #strokeRow let-stroke="stroke" let-index="index" let-isFirst="isFirst">
+    <div class="flex items-center gap-1.5">
+        @if (!isFirst) {
+            <span class="text-xs text-text/40">then</span>
+        }
+        <div class="flex items-center gap-1 p-1 rounded-md border border-divider bg-bg">
+            @for (mod of modifierList; track mod.key) {
+                <app-toggle-button [value]="!!stroke.modifiers?.[mod.key]" [disabled]="disabled()"
+                                    (valueChange)="toggleModifier(index, mod.key, $event)">
+                    {{ mod.label }}
+                </app-toggle-button>
+            }
+            <app-custom-select class="w-36" [labels]="keyOptions" [value]="stroke.key" [disabled]="disabled()"
+                                placeholder="Select a key" (valueChange)="selectKey(index, $event)"/>
+        </div>
+        @if (isMulti() && !disabled()) {
+            <button type="button" class="h-9 w-9 shrink-0 rounded-md border-transparent text-text/50 hover:text-danger hover:bg-danger/8 active:bg-danger/14 cursor-pointer"
+                    (click)="removeStroke(index)">×</button>
+        }
+    </div>
+</ng-template>
+
+<div class="flex items-center gap-2 flex-wrap">
+    @if (isMulti()) {
+        @for (stroke of value(); track $index) {
+            <ng-container [ngTemplateOutlet]="strokeRow" [ngTemplateOutletContext]="{stroke, index: $index, isFirst: $index === 0}"/>
+        }
+        @if (!disabled()) {
+            <app-custom-button type="button" variant="ghost" (click)="addStroke()">+ key</app-custom-button>
+        }
+    } @else {
+        <ng-container [ngTemplateOutlet]="strokeRow" [ngTemplateOutletContext]="{stroke: value()[0] ?? {key: ''}, index: 0, isFirst: true}"/>
+    }
+</div>

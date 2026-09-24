@@ -1,0 +1,174 @@
+<div class="min-h-screen px-4 sm:px-8 lg:px-12 pt-7 pb-18">
+    <div class="max-w-6xl mx-auto flex flex-col gap-8.5">
+
+        <h1 class="m-0 text-4xl font-medium tracking-tight">Converter</h1>
+
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <div class="flex flex-col gap-3.5 p-4.5 rounded-2xl bg-surface shadow-sm">
+                <div class="flex items-end justify-between gap-3">
+                    <div class="flex-1 min-w-0">
+                        <div class="text-xs text-text/60 mb-1">Source layout</div>
+                        <div class="flex items-center gap-2">
+                            <app-custom-select class="flex-1" [labels]="layoutNamesFrom()"
+                                               (valueChange)="onCommitFrom($event)"/>
+                            <app-toggle-button [(value)]="isCustomLayoutFrom">Custom</app-toggle-button>
+                        </div>
+                    </div>
+                    <app-tag variant="neutral">{{ layoutFromKeyCount() }} keys</app-tag>
+                </div>
+                <app-layout [layout]="layoutFrom()" [isDisabled]="true" [secondaryHighlightPositions]="previewPositionsFrom()"/>
+            </div>
+
+            <div class="flex flex-col gap-3.5 p-4.5 rounded-2xl bg-surface shadow-sm">
+                <div class="flex items-end justify-between gap-3">
+                    <div class="flex-1 min-w-0">
+                        <div class="text-xs text-text/60 mb-1">Target layout</div>
+                        <div class="flex items-center gap-2">
+                            <app-custom-select class="flex-1" [labels]="layoutNamesTo()"
+                                               (valueChange)="onCommitTo($event)"/>
+                            <app-toggle-button [(value)]="isCustomLayoutTo">Custom</app-toggle-button>
+                        </div>
+                    </div>
+                    <app-tag variant="outline">{{ diffCount() }} different keys</app-tag>
+                </div>
+                <app-layout [layout]="layoutTo()" [isDisabled]="true" [highlightPositions]="diffPositions()"
+                            [secondaryHighlightPositions]="previewPositionsTo()"/>
+                <div class="flex items-center gap-4 pt-3 border-t border-divider">
+                    <span class="text-xs tracking-widest uppercase text-text/60">Offset</span>
+                    <div class="flex items-center gap-1.5">
+                        <div class="flex items-center justify-center w-9 h-9 rounded-md border border-divider bg-surface text-text/50"
+                             aria-hidden="true">↔
+                        </div>
+                        <app-custom-input type="number" class="w-12" placeholder="0" [(value)]="horizontalOffset"/>
+                        <div class="flex flex-col h-9 w-6 rounded-md border border-divider overflow-hidden">
+                            <button type="button"
+                                    class="flex-1 flex items-center justify-center text-xs leading-none text-text/40 hover:text-text hover:bg-text/8 cursor-pointer"
+                                    (click)="stepOffset(horizontalOffset, 1)">▲
+                            </button>
+                            <button type="button"
+                                    class="flex-1 flex items-center justify-center text-xs leading-none border-t border-divider text-text/40 hover:text-text hover:bg-text/8 cursor-pointer"
+                                    (click)="stepOffset(horizontalOffset, -1)">▼
+                            </button>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-1.5">
+                        <div class="flex items-center justify-center w-9 h-9 rounded-md border border-divider bg-surface text-text/50"
+                             aria-hidden="true">↕
+                        </div>
+                        <app-custom-input type="number" class="w-12" placeholder="0" [(value)]="verticalOffset"/>
+                        <div class="flex flex-col h-9 w-6 rounded-md border border-divider overflow-hidden">
+                            <button type="button"
+                                    class="flex-1 flex items-center justify-center text-xs leading-none text-text/40 hover:text-text hover:bg-text/8 cursor-pointer"
+                                    (click)="stepOffset(verticalOffset, 1)">▲
+                            </button>
+                            <button type="button"
+                                    class="flex-1 flex items-center justify-center text-xs leading-none border-t border-divider text-text/40 hover:text-text hover:bg-text/8 cursor-pointer"
+                                    (click)="stepOffset(verticalOffset, -1)">▼
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="flex flex-col gap-3.5">
+            <div class="flex items-end gap-4 flex-wrap">
+                <div class="min-w-65">
+                    <div class="text-xs text-text/60 mb-1">Keymap to convert</div>
+                    <app-custom-select class="w-full" [labels]="keymapName()" (valueChange)="onCommitKeymap($event)"/>
+                </div>
+                <div class="flex items-center gap-2 pb-2">
+                    <app-tag variant="neutral">Read-only</app-tag>
+                    <span class="text-xs text-text/50">{{ actionCount() }}
+                        actions · source layout: {{ layoutFromName() }}</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-3.5 flex-wrap">
+                <app-custom-button type="button" (click)="onConvert()">Convert keymap</app-custom-button>
+                <span class="text-sm text-text/60">{{ layoutFromName() }} → {{ layoutToName() }}</span>
+                @if (hasResult()) {
+                    <app-custom-button type="button" variant="neutral" (click)="clearResult()">Clear result
+                    </app-custom-button>
+                }
+            </div>
+
+
+            <div class="flex flex-col py-1 pb-2">
+                <div class="flex items-end gap-4 px-0.5 pb-1.5">
+                    <span class="flex-1 min-w-0 text-xs tracking-widest uppercase text-text/60">Action</span>
+                    <span
+                        class="w-52 text-xs tracking-widest uppercase text-text/60">Original · {{ layoutFromName() }}</span>
+                    <span
+                        class="w-52 text-xs tracking-widest uppercase text-accent">Converted · {{ layoutToName() }}</span>
+                </div>
+                @for (row of bindingRows(); track row.action) {
+                    <div class="flex items-center gap-4 px-0.5 py-2 border-t border-divider">
+                        <span class="flex-1 min-w-0 flex items-center gap-1.5 text-sm">
+                            {{ row.action }}
+                            @if (row.locked) {
+                                <app-tag variant="neutral">Locked</app-tag>
+                            }
+                        </span>
+                        <span class="w-52 flex items-center gap-1.5 flex-wrap">
+                            @for (chord of chordsOf(row.original); track $index) {
+                                <span class="flex items-center gap-1.5">
+                                    @if (chord.prefix) {
+                                        <span class="text-xs tracking-wide text-text/40">{{ chord.prefix }}</span>
+                                    }
+                                    <kbd
+                                        class="font-mono text-xs px-2 py-1 rounded-sm border border-divider bg-bg text-text/85 whitespace-nowrap">{{ chord.label }}</kbd>
+                                </span>
+                            }
+                        </span>
+                        <span class="w-52 flex items-center gap-1.5 flex-wrap">
+                            @if (!row.converted) {
+                                <span class="text-xs text-text/40">—</span>
+                            } @else {
+                                @for (chord of chordsOf(row.converted); track $index) {
+                                    <span class="flex items-center gap-1.5">
+                                        @if (chord.prefix) {
+                                            <span class="text-xs tracking-wide text-text/40">{{ chord.prefix }}</span>
+                                        }
+                                        <kbd class="font-mono text-xs px-2 py-1 rounded-sm border whitespace-nowrap"
+                                             [class]="isChanged(row) ? 'border-accent/70 bg-accent/16 text-accent' : 'border-divider bg-bg text-text/85'">{{ chord.label }}</kbd>
+                                    </span>
+                                }
+                            }
+                        </span>
+                    </div>
+                }
+            </div>
+        </section>
+
+        @if (hasResult()) {
+            <section class="flex flex-col gap-4.5 pt-1.5">
+                <hr class="m-0 border-t border-divider">
+                <div class="flex items-baseline gap-3 flex-wrap">
+                    <h2 class="m-0 text-2xl font-medium">Conversion result</h2>
+                    <app-tag variant="accent">{{ remappedCount() }} shortcuts remapped</app-tag>
+                    <app-tag variant="neutral">{{ untouchedCount() }} unchanged</app-tag>
+                </div>
+
+                <div class="flex flex-col gap-2.5 pt-2.5">
+                    <h6 class="m-0 text-xs tracking-widest uppercase text-text/60">Raw data</h6>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="flex flex-col gap-2 min-w-0">
+                            <div class="flex items-center gap-2">
+                                <app-tag variant="neutral">Original</app-tag>
+                                <span class="text-xs text-text/50">{{ layoutFromName() }}</span>
+                            </div>
+                            <pre class="m-0 p-3.5 rounded-md bg-bg shadow-sm font-mono text-xs leading-relaxed text-text/85 max-h-105 overflow-auto">{{ json() }}</pre>
+                        </div>
+                        <div class="flex flex-col gap-2 min-w-0">
+                            <div class="flex items-center gap-2">
+                                <app-tag variant="accent">Converted</app-tag>
+                                <span class="text-xs text-text/50">{{ layoutToName() }}</span>
+                            </div>
+                            <pre class="m-0 p-3.5 rounded-md bg-bg border border-accent/30 font-mono text-xs leading-relaxed text-accent max-h-105 overflow-auto">{{ jsonConverted() }}</pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        }
+    </div>
+</div>
