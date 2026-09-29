@@ -1,11 +1,11 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ImportButtonComponent } from './import-button.component';
-import { APP_MESSAGES } from '../../../constants/app.constants';
+import {ImportButtonComponent} from './import-button.component';
+import {APP_MESSAGES} from '../../../constants/app.constants';
 
 function fileEvent(content: string): Event {
-    const file = new File([content], 'export.json', { type: 'application/json' });
-    return { target: { files: [file] } } as unknown as Event;
+    const file = new File([content], 'export.json', {type: 'application/json'});
+    return {target: {files: [file]}} as unknown as Event;
 }
 
 describe('ImportButtonComponent', () => {
@@ -36,32 +36,38 @@ describe('ImportButtonComponent', () => {
     it('rejects a file that is not valid JSON', async () => {
         await component['onImport'](fileEvent('{not json'));
         expect(imported).toEqual([]);
-        expect(open).toHaveBeenCalledWith(expect.anything(), { data: { message: APP_MESSAGES.invalidFileFormat, variant: 'danger' } });
+        expect(open).toHaveBeenCalledWith(expect.anything(), {
+            data: {message: APP_MESSAGES.invalidFileFormat, variant: 'danger'},
+        });
     });
 
     it('rejects a file with an empty or different kind', async () => {
-        await component['onImport'](fileEvent(JSON.stringify({ kind: '', data: { a: {} } })));
-        await component['onImport'](fileEvent(JSON.stringify({ kind: 'keymaps', data: { a: {} } })));
+        await component['onImport'](fileEvent(JSON.stringify({kind: '', data: {a: {}}})));
+        await component['onImport'](fileEvent(JSON.stringify({kind: 'keymaps', data: {a: {}}})));
         expect(imported).toEqual([]);
         expect(open).toHaveBeenCalledTimes(2);
-        expect(open).toHaveBeenNthCalledWith(1, expect.anything(), { data: { message: APP_MESSAGES.invalidFileKind, variant: 'danger' } });
-        expect(open).toHaveBeenNthCalledWith(2, expect.anything(), { data: { message: APP_MESSAGES.invalidFileKind, variant: 'danger' } });
+        expect(open).toHaveBeenNthCalledWith(1, expect.anything(), {
+            data: {message: APP_MESSAGES.invalidFileKind, variant: 'danger'},
+        });
+        expect(open).toHaveBeenNthCalledWith(2, expect.anything(), {
+            data: {message: APP_MESSAGES.invalidFileKind, variant: 'danger'},
+        });
     });
 
     it('emits the data as-is for a single import', async () => {
-        const data = { mine: { a1: 'q' } };
-        await component['onImport'](fileEvent(JSON.stringify({ kind: 'layouts', data })));
+        const data = {mine: {a1: 'q'}};
+        await component['onImport'](fileEvent(JSON.stringify({kind: 'layouts', data})));
         expect(imported).toEqual([data]);
         expect(localStorage.getItem('layouts')).toBeNull();
     });
 
     it('merges into storage for an all import and keeps existing names', async () => {
         fixture.componentRef.setInput('isAllImport', true);
-        fixture.componentRef.setInput('localStorageValues', { kept: { a1: 'old' } });
+        fixture.componentRef.setInput('localStorageValues', {kept: {a1: 'old'}});
         await component['onImport'](
-            fileEvent(JSON.stringify({ kind: 'layouts', data: { kept: { a1: 'new' }, added: { a1: 'x' } } })),
+            fileEvent(JSON.stringify({kind: 'layouts', data: {kept: {a1: 'new'}, added: {a1: 'x'}}})),
         );
-        const expected = { kept: { a1: 'old' }, added: { a1: 'x' } };
+        const expected = {kept: {a1: 'old'}, added: {a1: 'x'}};
         expect(imported).toEqual([expected]);
         expect(JSON.parse(localStorage.getItem('layouts') as string)).toEqual(expected);
     });

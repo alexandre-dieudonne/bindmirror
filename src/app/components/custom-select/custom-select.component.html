@@ -16,17 +16,22 @@
     (overlayOutsideClick)="popupExpanded.set(false)"
 >
     <div class="mt-2 w-full rounded-md bg-surface p-2 shadow-lg">
-        <input #searchEl type="text" placeholder="Search…"
-               class="w-full min-h-8 mb-2 px-2.5 text-sm text-text bg-surface border border-divider rounded-md"
-               [value]="searchTerm()"
-               (input)="onSearchInput($any($event.target).value)"
-               (keydown.escape)="close()"
-               (keydown.enter)="selectHighlighted()"
-               (keydown.arrowdown)="$event.preventDefault(); moveHighlight(1)"
-               (keydown.arrowup)="$event.preventDefault(); moveHighlight(-1)"/>
+        <input
+            #searchEl
+            type="text"
+            placeholder="Search…"
+            class="w-full min-h-8 mb-2 px-2.5 text-sm text-text bg-surface border border-divider rounded-md"
+            [value]="searchTerm()"
+            (input)="onSearchInput($any($event.target).value)"
+            (keydown.escape)="close()"
+            (keydown.enter)="selectHighlighted()"
+            (keydown.arrowdown)="$event.preventDefault(); moveHighlight(1)"
+            (keydown.arrowup)="$event.preventDefault(); moveHighlight(-1)"
+        />
         <div class="flex flex-col gap-0.5 max-h-44 overflow-auto">
             @for (label of filteredLabels(); track label; let i = $index) {
-                <div #itemEl
+                <div
+                    #itemEl
                     class="flex items-center justify-between gap-2 min-h-9 px-3 rounded-md cursor-pointer hover:bg-text/5"
                     [class]="itemClass(i, label)"
                     (click)="select(label)"

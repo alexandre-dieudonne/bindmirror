@@ -1,12 +1,8 @@
 <div class="flex-1">
     <div class="flex-1">
-        <input type="file"
-               accept=".json"
-               hidden
-               #fileInput
-               (change)="onImport($event)"/>
+        <input type="file" accept=".json" hidden #fileInput (change)="onImport($event)" />
     </div>
     <app-custom-button [variant]="variant()" type="submit" (click)="fileInput.click()">
-        <ng-content/>
+        <ng-content />
     </app-custom-button>
 </div>

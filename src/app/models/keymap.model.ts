@@ -23,4 +23,3 @@ export type KeymapEntry = {
 
 export type Keymap = Record<string, KeymapEntry>;
 export type Keymaps = Record<string, Keymap>;
-

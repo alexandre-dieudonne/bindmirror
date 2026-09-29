@@ -15,6 +15,7 @@ test:
   stage: test
   script:
     - npm ci
+    - npm run format:check
     - npx ng test --watch=false
 
 build:

@@ -4,7 +4,7 @@ import {getLayoutDimensions, KeyPosition, Layout, parsePosition, toPosition} fro
 import {KeyDialogComponent, KeyDialogData} from '../dialogs/key-dialog/key-dialog.component';
 import {CustomButtonComponent} from '../buttons/custom-button/custom-button.component';
 
-type Key = { position: KeyPosition; label: string; highlighted: boolean; secondaryHighlighted: boolean };
+type Key = {position: KeyPosition; label: string; highlighted: boolean; secondaryHighlighted: boolean};
 
 @Component({
     selector: 'app-layout',

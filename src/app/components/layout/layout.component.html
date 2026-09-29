@@ -5,11 +5,18 @@
                 @for (row of rows(); track $index) {
                     <div class="flex gap-1.5">
                         @for (key of row; track key.position) {
-                            <button type="button"
-                                    class="flex-1 aspect-square min-w-9 flex flex-col items-center justify-center gap-0.5 font-body font-medium text-sm uppercase rounded-sm cursor-pointer disabled:cursor-default disabled:hover:text-text disabled:hover:border-divider disabled:active:bg-transparent"
-                                    [class]="key.secondaryHighlighted ? 'text-warning border border-warning/60 bg-warning/14' : key.highlighted ? 'text-accent border border-accent/60 bg-accent/14' : 'text-text bg-surface border border-divider hover:text-accent hover:border-accent active:bg-accent/18'"
-                                    (click)="onKeyClickOpenDialog(key)"
-                                    [disabled]="isDisabled()"
+                            <button
+                                type="button"
+                                class="flex-1 aspect-square min-w-9 flex flex-col items-center justify-center gap-0.5 font-body font-medium text-sm uppercase rounded-sm cursor-pointer disabled:cursor-default disabled:hover:text-text disabled:hover:border-divider disabled:active:bg-transparent"
+                                [class]="
+                                    key.secondaryHighlighted
+                                        ? 'text-warning border border-warning/60 bg-warning/14'
+                                        : key.highlighted
+                                          ? 'text-accent border border-accent/60 bg-accent/14'
+                                          : 'text-text bg-surface border border-divider hover:text-accent hover:border-accent active:bg-accent/18'
+                                "
+                                (click)="onKeyClickOpenDialog(key)"
+                                [disabled]="isDisabled()"
                             >
                                 <span>{{ key.label }}</span>
                                 <span class="text-xs text-text/40">{{ key.position }}</span>
@@ -29,7 +36,9 @@
     @if (canResize() && !isDisabled()) {
         <div class="flex flex-col gap-1.5 shrink-0">
             <app-custom-button type="button" variant="ghost" (click)="addColumn()">+ Add column</app-custom-button>
-            <app-custom-button type="button" variant="ghost" (click)="removeColumn()">- Remove column</app-custom-button>
+            <app-custom-button type="button" variant="ghost" (click)="removeColumn()"
+                >- Remove column</app-custom-button
+            >
         </div>
     }
 </div>

@@ -12,9 +12,9 @@ export class ExportButtonComponent<T extends Record<string, unknown>> {
     private fileTransferService = inject(FileTransferService);
 
     isAllExport = input(false, {transform: booleanAttribute});
-    localStorageKey = input("");
+    localStorageKey = input('');
     localStorageValues = input<T>({} as T);
-    name = input<string>("");
+    name = input<string>('');
     variant = input<Variant>('neutral');
 
     exported = output();

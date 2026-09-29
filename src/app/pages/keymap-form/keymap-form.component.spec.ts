@@ -1,7 +1,7 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {provideRouter} from '@angular/router';
 
-import { KeymapFormComponent } from './keymap-form.component';
+import {KeymapFormComponent} from './keymap-form.component';
 
 describe('EditKeymapComponent', () => {
     let component: KeymapFormComponent;
@@ -25,24 +25,22 @@ describe('EditKeymapComponent', () => {
     it('exports the keymap as a named record, not as editor rows', () => {
         component.currentName.set('mine');
         component.currentKeymap.set({
-            rows: [{ action: 'jump', strokes: [{ key: 'space' }], locked: true }],
+            rows: [{action: 'jump', strokes: [{key: 'space'}], locked: true}],
         });
         expect(component.exportData()).toEqual({
-            mine: { jump: { strokes: [{ key: 'space' }], locked: true } },
+            mine: {jump: {strokes: [{key: 'space'}], locked: true}},
         });
     });
 
     it('re-imports what it exports', () => {
         component.currentName.set('mine');
         component.currentKeymap.set({
-            rows: [{ action: 'jump', strokes: [{ key: 'space' }], locked: true }],
+            rows: [{action: 'jump', strokes: [{key: 'space'}], locked: true}],
         });
         const exported = component.exportData();
-        component.currentKeymap.set({ rows: [{ action: '', strokes: [{ key: '' }], locked: false }] });
+        component.currentKeymap.set({rows: [{action: '', strokes: [{key: ''}], locked: false}]});
         component['onImported'](exported);
-        expect(component.currentKeymap().rows).toEqual([
-            { action: 'jump', strokes: [{ key: 'space' }], locked: true },
-        ]);
+        expect(component.currentKeymap().rows).toEqual([{action: 'jump', strokes: [{key: 'space'}], locked: true}]);
     });
 
     it('ignores an import that holds no keymap', () => {

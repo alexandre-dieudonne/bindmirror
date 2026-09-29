@@ -11,21 +11,22 @@ export class KeymapService {
         return this.http.get<Layouts>(`/assets/layout-presets.json`);
     }
 
-    offset(pos: string, colOffset: number, rowOffset: number, dims: { rows: number; cols: number }): KeyPosition {
+    offset(pos: string, colOffset: number, rowOffset: number, dims: {rows: number; cols: number}): KeyPosition {
         const parsed = parsePosition(pos);
         if (!parsed) {
             throw new Error(`Invalid key position: "${pos}"`);
         }
-        const newCol = (((parsed.col - 1 + colOffset) % dims.cols) + dims.cols) % dims.cols + 1;
-        const newRow = ((parsed.row + rowOffset) % dims.rows + dims.rows) % dims.rows;
+        const newCol = ((((parsed.col - 1 + colOffset) % dims.cols) + dims.cols) % dims.cols) + 1;
+        const newRow = (((parsed.row + rowOffset) % dims.rows) + dims.rows) % dims.rows;
         return toPosition(newRow, newCol);
     }
 
-    remap(layoutFrom: Layout,
-          layoutTo: Layout,
-          keybind: string,
-          colOffset: number,
-          rowOffset: number
+    remap(
+        layoutFrom: Layout,
+        layoutTo: Layout,
+        keybind: string,
+        colOffset: number,
+        rowOffset: number,
     ): string | undefined {
         const position = Object.entries(layoutFrom).find(([, v]) => v === keybind)?.[0];
         if (!position) return undefined;
@@ -40,20 +41,19 @@ export class KeymapService {
         return remappedKey ? {...stroke, key: remappedKey} : stroke;
     }
 
-    remapAll(
-        layoutFrom: Layout,
-        layoutTo: Layout,
-        keymap: Keymap,
-        colOffset: number,
-        rowOffset: number
-    ): Keymap {
+    remapAll(layoutFrom: Layout, layoutTo: Layout, keymap: Keymap, colOffset: number, rowOffset: number): Keymap {
         return Object.fromEntries(
             Object.entries(keymap).map(([action, entry]) => [
                 action,
                 entry.locked
                     ? entry
-                    : {...entry, strokes: entry.strokes.map((stroke) => this.remapStroke(layoutFrom, layoutTo, stroke, colOffset, rowOffset))},
-            ])
+                    : {
+                          ...entry,
+                          strokes: entry.strokes.map((stroke) =>
+                              this.remapStroke(layoutFrom, layoutTo, stroke, colOffset, rowOffset),
+                          ),
+                      },
+            ]),
         );
     }
 }

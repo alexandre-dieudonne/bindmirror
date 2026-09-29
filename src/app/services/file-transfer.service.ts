@@ -2,9 +2,13 @@ import {Service} from '@angular/core';
 import {ImportExportFiles} from '../models/import-export-files';
 
 function isImportExportFile(value: unknown): value is ImportExportFiles {
-    return typeof value === 'object' && value !== null
-        && typeof (value as ImportExportFiles).kind === 'string'
-        && typeof (value as ImportExportFiles).data === 'object' && (value as ImportExportFiles).data !== null;
+    return (
+        typeof value === 'object' &&
+        value !== null &&
+        typeof (value as ImportExportFiles).kind === 'string' &&
+        typeof (value as ImportExportFiles).data === 'object' &&
+        (value as ImportExportFiles).data !== null
+    );
 }
 
 @Service()

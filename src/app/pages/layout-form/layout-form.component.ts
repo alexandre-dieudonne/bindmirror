@@ -22,7 +22,7 @@ import {createEntityForm} from '../../services/entity-form.util';
         ExportButtonComponent,
         CustomButtonComponent,
         TagComponent,
-        EditableTitleComponent
+        EditableTitleComponent,
     ],
     templateUrl: './layout-form.component.html',
 })
@@ -54,9 +54,9 @@ export class LayoutFormComponent {
                 this.currentLayout.set(layout);
             }
         } else {
-            this.keymapService.loadLayoutPresets().subscribe(layouts => {
+            this.keymapService.loadLayoutPresets().subscribe((layouts) => {
                 this.layoutPresets.set(layouts);
-            })
+            });
         }
     }
 

@@ -17,7 +17,7 @@ export function createEntityForm<T>(options: EntityFormOptions) {
     const storageService = inject(StorageService);
     const route = inject(ActivatedRoute);
 
-    const name = toSignal(route.paramMap.pipe(map(p => p.get('name') ?? '')), {initialValue: ''});
+    const name = toSignal(route.paramMap.pipe(map((p) => p.get('name') ?? '')), {initialValue: ''});
     const isEditMode = computed(() => !!name());
     const oldName = signal(name());
     const currentName = signal(name());
@@ -43,9 +43,7 @@ export function createEntityForm<T>(options: EntityFormOptions) {
             return;
         }
 
-        const otherEntities = Object.fromEntries(
-            Object.entries(entities()).filter(([n]) => n !== oldName()),
-        );
+        const otherEntities = Object.fromEntries(Object.entries(entities()).filter(([n]) => n !== oldName()));
 
         if (Object.keys(otherEntities).includes(currentName())) {
             notify(APP_MESSAGES.nameAlreadyUsed, 'danger');

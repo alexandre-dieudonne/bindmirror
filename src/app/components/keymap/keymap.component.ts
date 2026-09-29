@@ -15,10 +15,8 @@ import {Shortcut} from '../../models/keymap.model';
 export class KeymapComponent {
     isDisabled = input<boolean>(false);
     multi = input<boolean>(false);
-    keymap = model<{ rows: Shortcut[] }>({
-        rows: [
-            {action: '', strokes: [{key: ''}], locked: false},
-        ],
+    keymap = model<{rows: Shortcut[]}>({
+        rows: [{action: '', strokes: [{key: ''}], locked: false}],
     });
 
     form = form(this.keymap, (p) => {

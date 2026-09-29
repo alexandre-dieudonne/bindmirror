@@ -12,7 +12,7 @@ import {NewButtonComponent} from '../buttons/new-button/new-button.component';
         EditButtonComponent,
         ExportButtonComponent,
         ImportButtonComponent,
-        NewButtonComponent
+        NewButtonComponent,
     ],
     templateUrl: './crud-list.component.html',
 })

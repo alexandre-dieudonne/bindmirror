@@ -1,11 +1,21 @@
-import {afterRenderEffect, Component, computed, ElementRef, input, model, signal, viewChild, viewChildren} from '@angular/core';
+import {
+    afterRenderEffect,
+    Component,
+    computed,
+    ElementRef,
+    input,
+    model,
+    signal,
+    viewChild,
+    viewChildren,
+} from '@angular/core';
 import {OverlayModule} from '@angular/cdk/overlay';
 import type {FormValueControl} from '@angular/forms/signals';
 
 @Component({
-  selector: 'app-custom-select',
-  imports: [OverlayModule],
-  templateUrl: './custom-select.component.html',
+    selector: 'app-custom-select',
+    imports: [OverlayModule],
+    templateUrl: './custom-select.component.html',
 })
 export class CustomSelectComponent implements FormValueControl<string> {
     value = model('');

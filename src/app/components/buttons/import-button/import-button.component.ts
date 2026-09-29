@@ -21,7 +21,7 @@ export class ImportButtonComponent<T extends Record<string, unknown>> {
     private fileTransferService = inject(FileTransferService);
     imported = output<T>();
     isAllImport = input(false, {transform: booleanAttribute});
-    localStorageKey = input("");
+    localStorageKey = input('');
     localStorageValues = input<T>({} as T);
     variant = input<Variant>('neutral');
 
@@ -37,9 +37,9 @@ export class ImportButtonComponent<T extends Record<string, unknown>> {
             this.dialog.open(CustomDialogComponent, {
                 data: {
                     message: APP_MESSAGES.invalidFileFormat,
-                    variant: 'danger'
+                    variant: 'danger',
                 },
-            })
+            });
             return;
         }
 
@@ -47,18 +47,16 @@ export class ImportButtonComponent<T extends Record<string, unknown>> {
             this.dialog.open(CustomDialogComponent, {
                 data: {
                     message: APP_MESSAGES.invalidFileKind,
-                    variant: 'danger'
+                    variant: 'danger',
                 },
-            })
+            });
             return;
         }
 
         const data = result.data;
         if (this.isAllImport()) {
             const existingKeys = Object.keys(this.localStorageValues());
-            const newObj = Object.fromEntries(
-                Object.entries(data).filter(([key]) => !existingKeys.includes(key))
-            ) as T;
+            const newObj = Object.fromEntries(Object.entries(data).filter(([key]) => !existingKeys.includes(key))) as T;
             const merged = {...this.localStorageValues(), ...newObj};
             this.storageService.setItem(this.localStorageKey(), merged);
             this.imported.emit(merged);
@@ -67,8 +65,8 @@ export class ImportButtonComponent<T extends Record<string, unknown>> {
         }
         this.dialog.open(CustomDialogComponent, {
             data: {
-                message: APP_MESSAGES.fileImportSuccess
+                message: APP_MESSAGES.fileImportSuccess,
             },
-        })
+        });
     }
 }

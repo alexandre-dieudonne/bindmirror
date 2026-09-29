@@ -1,7 +1,7 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {DIALOG_DATA, DialogRef} from '@angular/cdk/dialog';
 
-import { KeyDialogComponent } from './key-dialog.component';
+import {KeyDialogComponent} from './key-dialog.component';
 
 describe('LayoutComponent', () => {
     let component: KeyDialogComponent;

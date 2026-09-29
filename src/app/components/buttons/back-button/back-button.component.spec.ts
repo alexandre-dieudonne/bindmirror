@@ -1,7 +1,7 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {provideRouter} from '@angular/router';
 
-import { BackButtonComponent } from './back-button.component';
+import {BackButtonComponent} from './back-button.component';
 
 describe('BackButtonComponent', () => {
     let component: BackButtonComponent;
