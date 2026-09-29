@@ -10,13 +10,11 @@
                 [localStorageKey]="localStorageKey()"
                 isAllImport="true"
                 [localStorageValues]="items()"
-                (imported)="itemsChange.emit($event)">
+                (imported)="itemsChange.emit($event)"
+            >
                 Import
             </app-import-button>
-            <app-export-button
-                [localStorageKey]="localStorageKey()"
-                isAllExport="true"
-                [localStorageValues]="items()">
+            <app-export-button [localStorageKey]="localStorageKey()" isAllExport="true" [localStorageValues]="items()">
                 Export All
             </app-export-button>
         </div>
@@ -35,14 +33,16 @@
                         variant="ghost"
                         [localStorageKey]="localStorageKey()"
                         [localStorageValues]="single(row[0], row[1])"
-                        [name]="row[0]">
+                        [name]="row[0]"
+                    >
                         Export
                     </app-export-button>
                     <app-delete-button
                         [localStorageKey]="localStorageKey()"
                         [localStorageValues]="items()"
                         [name]="row[0]"
-                        (deleted)="itemsChange.emit($event)">Delete
+                        (deleted)="itemsChange.emit($event)"
+                        >Delete
                     </app-delete-button>
                 </span>
             </div>

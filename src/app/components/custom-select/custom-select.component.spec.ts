@@ -1,22 +1,22 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { CustomSelectComponent } from './custom-select.component';
+import {CustomSelectComponent} from './custom-select.component';
 
 describe('CustomSelect', () => {
-  let component: CustomSelectComponent;
-  let fixture: ComponentFixture<CustomSelectComponent>;
+    let component: CustomSelectComponent;
+    let fixture: ComponentFixture<CustomSelectComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [CustomSelectComponent],
-    }).compileComponents();
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
+            imports: [CustomSelectComponent],
+        }).compileComponents();
 
-    fixture = TestBed.createComponent(CustomSelectComponent);
-    component = fixture.componentInstance;
-    await fixture.whenStable();
-  });
+        fixture = TestBed.createComponent(CustomSelectComponent);
+        component = fixture.componentInstance;
+        await fixture.whenStable();
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });

@@ -12,7 +12,7 @@ export class ToggleButtonComponent implements FormValueControl<boolean> {
     value = model(false);
     disabled = input(false);
 
-    readonly toggleClass = computed(() => this.value() ? TOGGLE_ON : TOGGLE_OFF);
+    readonly toggleClass = computed(() => (this.value() ? TOGGLE_ON : TOGGLE_OFF));
 
     toggle() {
         if (this.disabled()) return;

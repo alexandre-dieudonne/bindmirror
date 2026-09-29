@@ -1,13 +1,14 @@
 <div class="box-content max-w-6xl mx-auto px-4 sm:px-8 lg:px-12 pt-7 pb-18 flex flex-col gap-5">
     <div class="flex items-center gap-3 flex-wrap">
         <app-back-button backUrl="/my-layouts"></app-back-button>
-        <app-editable-title [(value)]="currentName"/>
+        <app-editable-title [(value)]="currentName" />
         <app-tag variant="neutral">{{ isEditMode() ? 'Editing' : 'Creating' }}</app-tag>
         <span class="flex-1"></span>
         <app-export-button
             [localStorageKey]="APP_CONSTANTS.layouts"
             [localStorageValues]="exportData()"
-            [name]="currentName()">
+            [name]="currentName()"
+        >
             Export
         </app-export-button>
         <app-custom-button type="button" (click)="onSave()">Save</app-custom-button>
@@ -16,11 +17,9 @@
     @if (!isEditMode()) {
         <div class="flex items-end gap-2.5 flex-wrap p-3.5 rounded-2xl bg-surface shadow-sm">
             <div class="flex-1 min-w-65">
-                <app-custom-select [labels]="layoutNames()" (valueChange)="onCommitPreset($event)"/>
+                <app-custom-select [labels]="layoutNames()" (valueChange)="onCommitPreset($event)" />
             </div>
-            <app-import-button
-                localStorageKey="{{ APP_CONSTANTS.layouts }}"
-                (imported)="onImported($event)">
+            <app-import-button localStorageKey="{{ APP_CONSTANTS.layouts }}" (imported)="onImported($event)">
                 Import
             </app-import-button>
         </div>
@@ -28,9 +27,11 @@
 
     <div class="flex flex-col gap-3.5 p-4.5 rounded-2xl bg-surface shadow-sm">
         <div class="flex items-center justify-between gap-3 flex-wrap">
-            <h6 class="m-0 text-xs tracking-widest uppercase text-text/60">Key grid · {{ dimensions().rows }} × {{ dimensions().cols }}</h6>
+            <h6 class="m-0 text-xs tracking-widest uppercase text-text/60">
+                Key grid · {{ dimensions().rows }} × {{ dimensions().cols }}
+            </h6>
             <span class="text-xs text-text/50">Click a position to type its character.</span>
         </div>
-        <app-layout [layout]="currentLayout()" [canResize]="true" (layoutChange)="onLayoutChange($event)"/>
+        <app-layout [layout]="currentLayout()" [canResize]="true" (layoutChange)="onLayoutChange($event)" />
     </div>
 </div>

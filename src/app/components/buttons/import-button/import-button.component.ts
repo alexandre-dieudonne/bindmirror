@@ -3,11 +3,18 @@ import {booleanAttribute, Component, inject, input, output} from '@angular/core'
 import {Dialog} from '@angular/cdk/dialog';
 
 import {CustomButtonComponent} from '../custom-button/custom-button.component';
-import {APP_MESSAGES} from '../../../constants/app.constants';
+import {APP_CONSTANTS, APP_MESSAGES} from '../../../constants/app.constants';
+import {isLayouts} from '../../../models/layouts.model';
+import {isKeymaps} from '../../../models/keymap.model';
 import {StorageService} from '../../../services/storage.service';
 import {FileTransferService} from '../../../services/file-transfer.service';
 import {CustomDialogComponent} from '../../dialogs/custom-dialog/custom-dialog.component';
 import {Variant} from '../../../constants/variants';
+
+const VALIDATORS: Record<string, (data: unknown) => boolean> = {
+    [APP_CONSTANTS.layouts]: isLayouts,
+    [APP_CONSTANTS.keymaps]: isKeymaps,
+};
 
 @Component({
     selector: 'app-import-button',
@@ -21,7 +28,7 @@ export class ImportButtonComponent<T extends Record<string, unknown>> {
     private fileTransferService = inject(FileTransferService);
     imported = output<T>();
     isAllImport = input(false, {transform: booleanAttribute});
-    localStorageKey = input("");
+    localStorageKey = input('');
     localStorageValues = input<T>({} as T);
     variant = input<Variant>('neutral');
 
@@ -37,9 +44,9 @@ export class ImportButtonComponent<T extends Record<string, unknown>> {
             this.dialog.open(CustomDialogComponent, {
                 data: {
                     message: APP_MESSAGES.invalidFileFormat,
-                    variant: 'danger'
+                    variant: 'danger',
                 },
-            })
+            });
             return;
         }
 
@@ -47,18 +54,26 @@ export class ImportButtonComponent<T extends Record<string, unknown>> {
             this.dialog.open(CustomDialogComponent, {
                 data: {
                     message: APP_MESSAGES.invalidFileKind,
-                    variant: 'danger'
+                    variant: 'danger',
                 },
-            })
+            });
+            return;
+        }
+
+        if (!VALIDATORS[result.kind]?.(result.data)) {
+            this.dialog.open(CustomDialogComponent, {
+                data: {
+                    message: APP_MESSAGES.invalidFileFormat,
+                    variant: 'danger',
+                },
+            });
             return;
         }
 
         const data = result.data;
         if (this.isAllImport()) {
             const existingKeys = Object.keys(this.localStorageValues());
-            const newObj = Object.fromEntries(
-                Object.entries(data).filter(([key]) => !existingKeys.includes(key))
-            ) as T;
+            const newObj = Object.fromEntries(Object.entries(data).filter(([key]) => !existingKeys.includes(key))) as T;
             const merged = {...this.localStorageValues(), ...newObj};
             this.storageService.setItem(this.localStorageKey(), merged);
             this.imported.emit(merged);
@@ -67,8 +82,8 @@ export class ImportButtonComponent<T extends Record<string, unknown>> {
         }
         this.dialog.open(CustomDialogComponent, {
             data: {
-                message: APP_MESSAGES.fileImportSuccess
+                message: APP_MESSAGES.fileImportSuccess,
             },
-        })
+        });
     }
 }

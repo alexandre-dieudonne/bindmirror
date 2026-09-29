@@ -9,35 +9,47 @@
         <div class="relative flex items-center gap-3.5 px-2.5 py-2 border-t border-divider">
             @if (!isDisabled()) {
                 <div class="absolute -left-7 top-1/2 -translate-y-1/2 flex flex-col">
-                    <button type="button" class="h-4.5 w-6 flex items-center justify-center rounded-t-md text-text/40 hover:text-text hover:bg-text/8 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
-                            [disabled]="$index === 0"
-                            (click)="moveRow($index, -1)">↑
+                    <button
+                        type="button"
+                        class="h-4.5 w-6 flex items-center justify-center rounded-t-md text-text/40 hover:text-text hover:bg-text/8 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                        [disabled]="$index === 0"
+                        (click)="moveRow($index, -1)"
+                    >
+                        ↑
                     </button>
-                    <button type="button" class="h-4.5 w-6 flex items-center justify-center rounded-b-md text-text/40 hover:text-text hover:bg-text/8 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
-                            [disabled]="$index === keymap().rows.length - 1"
-                            (click)="moveRow($index, 1)">↓
+                    <button
+                        type="button"
+                        class="h-4.5 w-6 flex items-center justify-center rounded-b-md text-text/40 hover:text-text hover:bg-text/8 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                        [disabled]="$index === keymap().rows.length - 1"
+                        (click)="moveRow($index, 1)"
+                    >
+                        ↓
                     </button>
                 </div>
             }
             <div class="flex-1">
-                <app-custom-input [formField]="row.action" placeholder="Action name"/>
+                <app-custom-input [formField]="row.action" placeholder="Action name" />
             </div>
             <div class="flex-1">
-                <app-shortcut-input [formField]="row.strokes" [forceMulti]="multi()"/>
+                <app-shortcut-input [formField]="row.strokes" [forceMulti]="multi()" />
             </div>
             <div class="w-16">
                 <app-toggle-button [formField]="row.locked">Lock</app-toggle-button>
             </div>
             <div class="w-9 flex justify-center">
                 @if (!isDisabled()) {
-                    <button type="button" class="h-9 w-9 shrink-0 rounded-md border-transparent text-text/50 hover:text-danger hover:bg-danger/8 active:bg-danger/14 cursor-pointer"
-                            (click)="removeRow($index)">×
+                    <button
+                        type="button"
+                        class="h-9 w-9 shrink-0 rounded-md border-transparent text-text/50 hover:text-danger hover:bg-danger/8 active:bg-danger/14 cursor-pointer"
+                        (click)="removeRow($index)"
+                    >
+                        ×
                     </button>
                 }
             </div>
         </div>
     }
-    @if (!isDisabled()){
+    @if (!isDisabled()) {
         <div class="pt-2 px-2.5 border-t border-divider">
             <app-custom-button type="button" variant="ghost" (click)="addRow()">+ Add row</app-custom-button>
         </div>

@@ -12,11 +12,18 @@ import {createEntityForm} from '../../services/entity-form.util';
 
 @Component({
     selector: 'app-keymap-form',
-    imports: [BackButtonComponent, ExportButtonComponent, ImportButtonComponent, CustomButtonComponent, ToggleButtonComponent, KeymapComponent, EditableTitleComponent],
+    imports: [
+        BackButtonComponent,
+        ExportButtonComponent,
+        ImportButtonComponent,
+        CustomButtonComponent,
+        ToggleButtonComponent,
+        KeymapComponent,
+        EditableTitleComponent,
+    ],
     templateUrl: './keymap-form.component.html',
 })
 export class KeymapFormComponent {
-
     protected readonly APP_CONSTANTS = APP_CONSTANTS;
 
     private form = createEntityForm<Keymap>({
@@ -28,10 +35,8 @@ export class KeymapFormComponent {
     isEditMode = this.form.isEditMode;
     currentName = this.form.currentName;
 
-    currentKeymap = signal<{ rows: Shortcut[] }>({
-        rows: [
-            {action: '', strokes: [{key: ''}], locked: false},
-        ],
+    currentKeymap = signal<{rows: Shortcut[]}>({
+        rows: [{action: '', strokes: [{key: ''}], locked: false}],
     });
     multi = signal(false);
     keymap = computed<Keymap>(() =>
@@ -46,7 +51,11 @@ export class KeymapFormComponent {
         if (this.isEditMode()) {
             const keymap = this.form.currentEntity();
             if (keymap) {
-                const rows = Object.entries(keymap).map(([action, entry]) => ({action, strokes: entry.strokes, locked: entry.locked}));
+                const rows = Object.entries(keymap).map(([action, entry]) => ({
+                    action,
+                    strokes: entry.strokes,
+                    locked: entry.locked,
+                }));
                 this.currentKeymap.set({rows});
             }
         }
@@ -55,7 +64,11 @@ export class KeymapFormComponent {
     protected onImported(data: Keymaps) {
         const keymap = Object.values(data)[0];
         if (!keymap) return;
-        const rows: Shortcut[] = Object.entries(keymap).map(([action, entry]) => ({action, strokes: entry.strokes, locked: entry.locked}));
+        const rows: Shortcut[] = Object.entries(keymap).map(([action, entry]) => ({
+            action,
+            strokes: entry.strokes,
+            locked: entry.locked,
+        }));
         this.currentKeymap.set({rows});
     }
 

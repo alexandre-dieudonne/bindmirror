@@ -5,9 +5,7 @@ import {CustomDialogComponent} from '../dialogs/custom-dialog/custom-dialog.comp
 
 @Component({
     selector: 'app-navbar',
-    imports: [
-        RouterLink
-    ],
+    imports: [RouterLink],
     templateUrl: './navbar.component.html',
 })
 export class NavbarComponent {}

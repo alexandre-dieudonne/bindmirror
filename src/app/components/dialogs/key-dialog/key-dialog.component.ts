@@ -2,7 +2,7 @@ import {Component, ElementRef, afterNextRender, inject, viewChild} from '@angula
 import {DIALOG_DATA, DialogRef} from '@angular/cdk/dialog';
 import {CustomButtonComponent} from '../../buttons/custom-button/custom-button.component';
 
-export type KeyDialogData = { position: string; label: string };
+export type KeyDialogData = {position: string; label: string};
 
 @Component({
     selector: 'app-key-dialog',

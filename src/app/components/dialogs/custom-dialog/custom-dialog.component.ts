@@ -4,7 +4,7 @@ import {Router} from '@angular/router';
 import {CustomButtonComponent} from '../../buttons/custom-button/custom-button.component';
 import {Variant, variantBorderClasses} from '../../../constants/variants';
 
-export type CustomDialogData = { message: string, navigateUrl?: string, variant?: Variant };
+export type CustomDialogData = {message: string; navigateUrl?: string; variant?: Variant};
 
 @Component({
     selector: 'app-custom-dialog',
@@ -23,6 +23,6 @@ export class CustomDialogComponent {
         this.dialogRef.closed.subscribe(() => {
             if (!this.data.navigateUrl) return;
             void this.router.navigate([this.data.navigateUrl]);
-        })
+        });
     }
 }

@@ -1,7 +1,7 @@
 import {Component, computed, inject, signal, WritableSignal} from '@angular/core';
 import {KeymapService} from '../../services/keymap.service';
 import {CustomSelectComponent} from '../../components/custom-select/custom-select.component';
-import {getLayoutDimensions, Layouts, Layout,} from '../../models/layouts.model';
+import {getLayoutDimensions, Layouts, Layout} from '../../models/layouts.model';
 import {Keymap, Keymaps, Stroke} from '../../models/keymap.model';
 import {CustomButtonComponent} from '../../components/buttons/custom-button/custom-button.component';
 import {StorageService} from '../../services/storage.service';
@@ -11,14 +11,21 @@ import {ToggleButtonComponent} from '../../components/toggle-button/toggle-butto
 import {TagComponent} from '../../components/tag/tag.component';
 import {CustomInputComponent} from '../../components/custom-input/custom-input.component';
 
-type BindingRow = { action: string; original: Stroke[]; converted?: Stroke[]; locked: boolean };
+type BindingRow = {action: string; original: Stroke[]; converted?: Stroke[]; locked: boolean};
 
 const PREVIEW_POSITIONS = ['a2', 'b1', 'b2', 'b3'];
 
 @Component({
     selector: 'app-converter',
     templateUrl: './converter.component.html',
-    imports: [CustomSelectComponent, CustomButtonComponent, LayoutComponent, ToggleButtonComponent, TagComponent, CustomInputComponent],
+    imports: [
+        CustomSelectComponent,
+        CustomButtonComponent,
+        LayoutComponent,
+        ToggleButtonComponent,
+        TagComponent,
+        CustomInputComponent,
+    ],
 })
 export class ConverterComponent {
     keymapService = inject(KeymapService);
@@ -33,10 +40,10 @@ export class ConverterComponent {
     isCustomLayoutTo = signal(false);
 
     layoutNamesFrom = computed(() =>
-        this.isCustomLayoutFrom() ? Object.keys(this.customLayouts()) : Object.keys(this.layoutPresets())
+        this.isCustomLayoutFrom() ? Object.keys(this.customLayouts()) : Object.keys(this.layoutPresets()),
     );
     layoutNamesTo = computed(() =>
-        this.isCustomLayoutTo() ? Object.keys(this.customLayouts()) : Object.keys(this.layoutPresets())
+        this.isCustomLayoutTo() ? Object.keys(this.customLayouts()) : Object.keys(this.layoutPresets()),
     );
 
     layoutFrom = signal<Layout>({});
@@ -77,13 +84,13 @@ export class ConverterComponent {
     });
 
     remappedCount = computed(() => this.bindingRows().filter((row) => this.isChanged(row)).length);
-    untouchedCount = computed(() => this.hasResult() ? this.bindingRows().length - this.remappedCount() : 0);
+    untouchedCount = computed(() => (this.hasResult() ? this.bindingRows().length - this.remappedCount() : 0));
 
     json = signal('');
     jsonConverted = signal('');
 
-    horizontalOffset = signal("");
-    verticalOffset = signal("");
+    horizontalOffset = signal('');
+    verticalOffset = signal('');
     horizontalOffsetValue = computed(() => Number(this.horizontalOffset()) || 0);
     verticalOffsetValue = computed(() => Number(this.verticalOffset()) || 0);
 
@@ -99,9 +106,9 @@ export class ConverterComponent {
     });
 
     ngOnInit() {
-        this.keymapService.loadLayoutPresets().subscribe(layouts => {
+        this.keymapService.loadLayoutPresets().subscribe((layouts) => {
             this.layoutPresets.set(layouts);
-        })
+        });
 
         const layouts = this.storageService.getItem<Layouts>(this.APP_CONSTANTS.layouts);
         if (layouts) {
@@ -141,7 +148,7 @@ export class ConverterComponent {
             this.keymap(),
             this.horizontalOffsetValue(),
             this.verticalOffsetValue(),
-        )
+        );
         this.convertedKeymap.set(result);
         this.jsonConverted.set(JSON.stringify(result, null, 2));
     }
@@ -156,7 +163,7 @@ export class ConverterComponent {
         this.jsonConverted.set('');
     }
 
-    chordsOf(strokes: Stroke[] = []): { prefix: string; label: string }[] {
+    chordsOf(strokes: Stroke[] = []): {prefix: string; label: string}[] {
         return strokes.map((stroke, i) => ({prefix: i === 0 ? '' : 'then', label: this.formatStroke(stroke)}));
     }
 

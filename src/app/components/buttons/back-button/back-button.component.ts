@@ -8,5 +8,5 @@ import {CustomButtonComponent} from '../custom-button/custom-button.component';
     templateUrl: './back-button.component.html',
 })
 export class BackButtonComponent {
-    backUrl = input("");
+    backUrl = input('');
 }

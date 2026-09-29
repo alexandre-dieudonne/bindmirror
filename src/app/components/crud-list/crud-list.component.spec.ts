@@ -1,7 +1,7 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {provideRouter} from '@angular/router';
 
-import { CrudListComponent } from './crud-list.component';
+import {CrudListComponent} from './crud-list.component';
 
 describe('CrudListComponent', () => {
     let component: CrudListComponent<Record<string, unknown>>;

@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { KeymapComponent } from './keymap.component';
+import {KeymapComponent} from './keymap.component';
 
 describe('KeymapComponent', () => {
     let component: KeymapComponent;

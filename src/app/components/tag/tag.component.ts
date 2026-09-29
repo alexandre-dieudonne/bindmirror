@@ -13,5 +13,6 @@ const TAG_OUTLINE_CLASS = 'border border-accent text-accent';
 export class TagComponent {
     variant = input<TagVariant>('neutral');
     variantClass = computed(() =>
-        this.variant() === 'outline' ? TAG_OUTLINE_CLASS : variantTagClasses[this.variant() as Variant]);
+        this.variant() === 'outline' ? TAG_OUTLINE_CLASS : variantTagClasses[this.variant() as Variant],
+    );
 }

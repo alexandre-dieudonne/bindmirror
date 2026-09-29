@@ -1,9 +1,9 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
-import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
-import { Subject } from 'rxjs';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {provideRouter} from '@angular/router';
+import {DIALOG_DATA, DialogRef} from '@angular/cdk/dialog';
+import {Subject} from 'rxjs';
 
-import { CustomDialogComponent } from './custom-dialog.component';
+import {CustomDialogComponent} from './custom-dialog.component';
 
 describe('CustomDialogComponent', () => {
     let component: CustomDialogComponent;
