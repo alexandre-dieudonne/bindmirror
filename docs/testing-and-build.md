@@ -23,7 +23,7 @@ No lint command is configured. The test builder is `@angular/build:unit-test`.
 | `nginx.conf` | Falls back to `index.html` so direct links to Angular routes work |
 | `docker-compose.yml` | Builds the image and exposes it on http://localhost:8080 |
 | `.dockerignore` | Keeps `node_modules`, `dist`, docs and sample data out of the build context |
-| `.gitlab-ci.yml` | `test` stage (`npm run format:check`, `ng test --watch=false`) then `build` stage (`npm run build`) |
+| `.gitlab-ci.yml` | `test` stage (`npm run format:check`, `ng test --watch=false`) then `build` stage (`npm run build`), then `pages` on the default branch: publishes the build to GitLab Pages, with `index.html` copied to `404.html` so direct links to routes work |
 
 ## Test files
 

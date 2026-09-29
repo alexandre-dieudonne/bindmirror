@@ -6,6 +6,8 @@ BindMirror remaps a keymap from one layout to another by **physical key position
 
 Everything runs in the browser. There is no backend: your layouts and keymaps are stored in `localStorage`.
 
+Try it online: https://bindmirror-546f06.gitlab.io
+
 ## Features
 
 - **Convert** a keymap between two layouts, with a preview of the changed keys and the result as a table.
