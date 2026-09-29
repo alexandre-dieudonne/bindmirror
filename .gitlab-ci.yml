@@ -10,6 +10,7 @@ cache:
 stages:
   - test
   - build
+  - deploy
 
 test:
   stage: test
@@ -23,3 +24,17 @@ build:
   script:
     - npm ci
     - npm run build
+
+pages:
+  stage: deploy
+  script:
+    - npm ci
+    - npm run build
+    - rm -rf public
+    - mv dist/bindmirror/browser public
+    - cp public/index.html public/404.html
+  artifacts:
+    paths:
+      - public
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
