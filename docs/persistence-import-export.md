@@ -54,9 +54,10 @@ When the name is empty (new item not yet titled), the record key falls back to `
 
 1. Reads the file with `FileTransferService.readFile`. Failure: `invalidFileFormat` dialog.
 2. Compares `result.kind` to `localStorageKey`. Different: `invalidFileKind` dialog.
-3. Depending on the mode:
+3. Validates `data` against its kind (`isLayouts` or `isKeymaps`). Invalid: `invalidFileFormat` dialog.
+4. Depending on the mode:
    - `isAllImport` (list page): entries whose name already exists are **ignored** (existing ones win), new ones are added, the merged result is written to localStorage and emitted through `imported`.
    - otherwise (form page): `data` is emitted as-is through `imported` with no write; the page takes the first entry of the record (`Object.values(data)[0]`) into its state (`onImported`) and the user saves afterwards. A file with no entry is ignored.
-4. `fileImportSuccess` dialog.
+5. `fileImportSuccess` dialog.
 
-The content of `data` is not deeply validated: only the shape `{kind: string, data: object}` is checked.
+`isLayouts` checks that every layout maps valid positions to strings. `isKeymaps` checks that every entry has a `strokes` array of `{key: string, modifiers?: {[name]: boolean}}` and a boolean `locked`.

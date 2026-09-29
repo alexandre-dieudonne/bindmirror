@@ -54,6 +54,16 @@ describe('ImportButtonComponent', () => {
         });
     });
 
+    it('rejects a file whose data does not match its kind', async () => {
+        await component['onImport'](fileEvent(JSON.stringify({kind: 'layouts', data: {mine: {a1: 42}}})));
+        await component['onImport'](fileEvent(JSON.stringify({kind: 'layouts', data: {mine: {'1a': 'q'}}})));
+        expect(imported).toEqual([]);
+        expect(open).toHaveBeenCalledTimes(2);
+        expect(open).toHaveBeenCalledWith(expect.anything(), {
+            data: {message: APP_MESSAGES.invalidFileFormat, variant: 'danger'},
+        });
+    });
+
     it('emits the data as-is for a single import', async () => {
         const data = {mine: {a1: 'q'}};
         await component['onImport'](fileEvent(JSON.stringify({kind: 'layouts', data})));

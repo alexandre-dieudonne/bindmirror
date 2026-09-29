@@ -10,6 +10,7 @@ ng test --watch=false                          # single run
 ng test --include src/app/path/to/x.spec.ts    # a single file
 ng test --filter "test name"                   # filter by name
 npm run format                                 # Prettier on src/**/*.{ts,html}
+npm run format:check                           # check formatting without writing
 ```
 
 No lint command is configured. The test builder is `@angular/build:unit-test`.
@@ -22,7 +23,7 @@ No lint command is configured. The test builder is `@angular/build:unit-test`.
 | `nginx.conf` | Falls back to `index.html` so direct links to Angular routes work |
 | `docker-compose.yml` | Builds the image and exposes it on http://localhost:8080 |
 | `.dockerignore` | Keeps `node_modules`, `dist`, docs and sample data out of the build context |
-| `.gitlab-ci.yml` | `test` stage (`ng test --watch=false`) then `build` stage (`npm run build`) |
+| `.gitlab-ci.yml` | `test` stage (`npm run format:check`, `ng test --watch=false`) then `build` stage (`npm run build`) |
 
 ## Test files
 
@@ -44,7 +45,7 @@ Examples: the `back-button`, `custom-dialog` and `layout-form` specs.
 | --- | --- |
 | `angular.json` | Builders (`application`, `dev-server`, `unit-test`), build budgets |
 | `tsconfig.json`, `tsconfig.app.json`, `tsconfig.spec.json` | TypeScript |
-| `.prettierrc` | Print width 100, single quotes, Angular parser for `.html` |
+| `.prettierrc` | Print width 120, 4-space indent, single quotes, no bracket spacing, Angular parser for `.html` |
 | `.editorconfig` | Editor conventions |
 | `.postcssrc.json` | Tailwind plugin |
 

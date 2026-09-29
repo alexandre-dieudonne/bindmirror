@@ -3,11 +3,18 @@ import {booleanAttribute, Component, inject, input, output} from '@angular/core'
 import {Dialog} from '@angular/cdk/dialog';
 
 import {CustomButtonComponent} from '../custom-button/custom-button.component';
-import {APP_MESSAGES} from '../../../constants/app.constants';
+import {APP_CONSTANTS, APP_MESSAGES} from '../../../constants/app.constants';
+import {isLayouts} from '../../../models/layouts.model';
+import {isKeymaps} from '../../../models/keymap.model';
 import {StorageService} from '../../../services/storage.service';
 import {FileTransferService} from '../../../services/file-transfer.service';
 import {CustomDialogComponent} from '../../dialogs/custom-dialog/custom-dialog.component';
 import {Variant} from '../../../constants/variants';
+
+const VALIDATORS: Record<string, (data: unknown) => boolean> = {
+    [APP_CONSTANTS.layouts]: isLayouts,
+    [APP_CONSTANTS.keymaps]: isKeymaps,
+};
 
 @Component({
     selector: 'app-import-button',
@@ -47,6 +54,16 @@ export class ImportButtonComponent<T extends Record<string, unknown>> {
             this.dialog.open(CustomDialogComponent, {
                 data: {
                     message: APP_MESSAGES.invalidFileKind,
+                    variant: 'danger',
+                },
+            });
+            return;
+        }
+
+        if (!VALIDATORS[result.kind]?.(result.data)) {
+            this.dialog.open(CustomDialogComponent, {
+                data: {
+                    message: APP_MESSAGES.invalidFileFormat,
                     variant: 'danger',
                 },
             });

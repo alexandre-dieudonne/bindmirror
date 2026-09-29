@@ -1,3 +1,5 @@
+import {isRecord} from './import-export-files';
+
 type Row =
     | 'a'
     | 'b'
@@ -53,4 +55,15 @@ export function parsePosition(position: string): {row: number; col: number} | un
     const match = /^([a-z])(\d+)$/.exec(position);
     if (!match) return undefined;
     return {row: match[1].charCodeAt(0) - 97, col: parseInt(match[2], 10)};
+}
+
+export function isLayouts(value: unknown): value is Layouts {
+    return (
+        isRecord(value) &&
+        Object.values(value).every(
+            (layout) =>
+                isRecord(layout) &&
+                Object.entries(layout).every(([position, key]) => parsePosition(position) && typeof key === 'string'),
+        )
+    );
 }

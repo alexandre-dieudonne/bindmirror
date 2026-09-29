@@ -9,7 +9,7 @@
 | Overlays / dialogs | `@angular/cdk` (`Dialog`, `DIALOG_DATA`, `DialogRef`) |
 | Styling | Tailwind CSS v4, CSS-first config (`@theme` block in `src/styles.css`) |
 | Tests | Vitest + jsdom via `ng test` |
-| Formatting | Prettier (print width 100, single quotes, Angular parser for `.html`) |
+| Formatting | Prettier (print width 120, 4-space indent, single quotes, no bracket spacing, Angular parser for `.html`) |
 | Language | TypeScript 6 |
 | Font | Inter (Google Fonts) |
 
