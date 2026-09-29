@@ -8,6 +8,8 @@ Everything runs in the browser. There is no backend: your layouts and keymaps ar
 
 Try it online: https://bindmirror-546f06.gitlab.io
 
+![Converter: pick a source layout, a target layout and a keymap, then convert](docs/images/converter-view.png)
+
 ## Features
 
 - **Convert** a keymap between two layouts, with a preview of the changed keys and the result as a table.
@@ -16,6 +18,16 @@ Try it online: https://bindmirror-546f06.gitlab.io
 - **Custom layouts**: build a layout on a resizable key grid, or start from a preset.
 - **Custom keymaps**: define actions with single keys, modifiers, or multi-step shortcuts (chords), reorder them, and lock the ones that must not be remapped.
 - **Import and export** layouts and keymaps as JSON files.
+
+## Screenshots
+
+| My layouts | Layout editor |
+| --- | --- |
+| ![Custom layouts list](docs/images/layout-list-view.png) | ![Layout editor on a resizable key grid](docs/images/layout-form-view.png) |
+
+| My keymaps | Keymap editor |
+| --- | --- |
+| ![Custom keymaps list](docs/images/keymap-list-view.png) | ![Keymap editor with modifiers and locked actions](docs/images/keymap-form-view.png) |
 
 ## Getting started
 
