@@ -6,9 +6,18 @@ BindMirror remaps a keymap from one layout to another by **physical key position
 
 Everything runs in the browser. There is no backend: your layouts and keymaps are stored in `localStorage`.
 
-Try it online: https://bindmirror-546f06.gitlab.io
+Try it online: https://bindmirror-0bfcf9.gitlab.io
 
 ![Converter: pick a source layout, a target layout and a keymap, then convert](docs/images/converter-view.png)
+
+## How it works
+
+1. Pick the layout your shortcuts were made for (for example qwerty) and the layout you are moving to.
+2. Pick or create the keymap to convert.
+3. Convert: the result table shows the new key for each action, with the changed ones highlighted.
+4. Rebind the changed shortcuts in your game or app, following the table.
+
+BindMirror does not change any game or app settings: it tells you which keys to rebind, and you apply them yourself.
 
 ## Features
 

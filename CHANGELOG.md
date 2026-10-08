@@ -2,7 +2,7 @@
 
 ## 0.1.1 - 2026-09-29
 
-- Online demo on GitLab Pages: https://bindmirror-546f06.gitlab.io
+- Online demo on GitLab Pages: https://bindmirror-0bfcf9.gitlab.io
 - Screenshots in the README.
 
 ## 0.1.0 - 2026-09-29
